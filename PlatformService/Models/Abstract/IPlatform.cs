@@ -1,0 +1,10 @@
+﻿namespace PlatformService.Models
+{
+    public interface IPlatform : IDbEntity
+    {
+        public string Name { get; set; }
+
+        public string Publisher { get; set; }
+        public string Cost { get; set; }
+    }
+}

@@ -1,0 +1,9 @@
+FROM postgres
+ENV POSTGRES_USER=Snusmumric
+ENV POSTGRES_PASSWORD=admin
+RUN mkdir -p /S/Repository/Microservices/PlatformService/PlatformService/bin/Debug/net7.0/DBFiles/Postgre
+RUN chown -R postgres:postgres /S/Repository/Microservices/PlatformService/PlatformService/bin/Debug/net7.0/DBFiles/Postgre
+ENV PGDATA=/S/Repository/Microservices/PlatformService/PlatformService/bin/Debug/net7.0/DBFiles/Postgre
+ENV TZ=Europe/Moscow
+EXPOSE 5432
+CMD ["postgres"]

@@ -1,0 +1,7 @@
+FROM logstash:7.17.15
+
+COPY ../LogStashConf/pipeline.conf /usr/share/logstash/pipeline/pipeline.conf
+
+EXPOSE 5044
+
+CMD ["logstash", "-f", "/usr/share/logstash/pipeline/pipeline.conf"]

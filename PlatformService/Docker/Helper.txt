@@ -1,0 +1,4 @@
+start command - docker-compose up -d
+volume - /S/Repository/Docker/DBFiles/Postgre:/var/lib/postgresql/data
+Logs - /S/Repository/Docker/DBFiles/Logs/elasticsearch-data:/usr/share/elasticsearch/data
+      - /S/Repository/Docker/DBFiles/Logs/elasticsearch-logs:/usr/share/elasticsearch/logs
