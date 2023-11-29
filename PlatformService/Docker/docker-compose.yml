@@ -16,6 +16,19 @@ services:
     volumes:
       - /S/Repository/Microservices/PlatformService/PlatformService/bin/Debug/net7.0/DBFiles/Postgre:/var/lib/postgresql/data
     restart: unless-stopped
+    mem_limit: 0.5g 
+    cpus: 0.5
+
+  platform-service:
+    container_name: platform-service
+    build: 
+      context: ../
+      dockerfile: Docker/dockerFiles/Dockerfile-app
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+    mem_limit: 0.5g 
+    cpus: 0.5
 
   pgadmin:
     container_name: pgadmin4
@@ -31,6 +44,8 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    mem_limit: 0.5g 
+    cpus: 0.5
 
   elasticsearch:
     container_name: elasticsearch
@@ -46,6 +61,8 @@ services:
       - /S/Repository/Microservices/PlatformService/PlatformService/bin/Debug/net7.0/Logs/elasticsearch-data:/usr/share/elasticsearch/data
       - /S/Repository/Microservices/PlatformService/PlatformService/bin/Debug/net7.0/Logs/elasticsearch-logs:/usr/share/elasticsearch/logs
     restart: unless-stopped
+    mem_limit: 0.5g 
+    cpus: 0.5
 
   kibana:
     container_name: kibana
@@ -59,6 +76,8 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    mem_limit: 0.5g 
+    cpus: 0.5
 
   logstash:
     container_name: logstash
@@ -75,6 +94,8 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    mem_limit: 0.5g 
+    cpus: 0.5
 
 networks:
   postgres:
