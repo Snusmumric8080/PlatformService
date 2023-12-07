@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlatformService.Models
 {
     public class Platform : IPlatform
     {
         [Key]
-        [Required]
         public int Id { get; set; }
 
         [Required]

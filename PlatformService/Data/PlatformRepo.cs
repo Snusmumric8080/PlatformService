@@ -8,17 +8,16 @@ namespace PlatformService.Data
 
         public PlatformRepo(AppDbContext context)
         {
-            _context = context;      
+            _context = context;
         }
 
-        public int CreatePlatform(Platform platform)
+        public void CreatePlatform(Platform platform)
         {
-            if(platform is null)
+            if (platform is null)
             {
                 throw new ArgumentNullException(nameof(platform));
             }
             _context.Platforms.Add(platform);
-            return platform.Id;
         }
 
         public IPlatform GetPlatformById(int id)

@@ -1,5 +1,6 @@
 ﻿using PlatformService.Data;
 using PlatformService.Models;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService.Extensions
 {
@@ -9,6 +10,7 @@ namespace PlatformService.Extensions
         {
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddScoped<IPlatform, Platform>();
+            services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
         }
     }
 }

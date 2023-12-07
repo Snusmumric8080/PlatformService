@@ -2,6 +2,7 @@
 using PlatformService.Data;
 using PlatformService.Extensions;
 using PlatformService.Models.Dtos;
+using PlatformService.SyncDataServices.Http;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PlatformService.Controllers
@@ -12,10 +13,13 @@ namespace PlatformService.Controllers
     {
         private readonly IPlatformRepo _platformRepo;
         private readonly ILogger _logger;
-        public PlatformsController(IPlatformRepo platformRepo, ILogger<PlatformsController> logger)
+        private readonly ICommandDataClient _commandDataClient;
+
+        public PlatformsController(IPlatformRepo platformRepo, ILogger<PlatformsController> logger, ICommandDataClient commandDataClient)
         {
             _platformRepo = platformRepo;
             _logger = logger;
+            _commandDataClient = commandDataClient;
         }
 
         [HttpGet]
@@ -49,15 +53,20 @@ namespace PlatformService.Controllers
 
         [Route("create")]
         [HttpPost]
-        public ActionResult<PlatformReadDto> Create(PlatformCreateDto createModel)
+        public async Task<ActionResult<PlatformReadDto>> Create(PlatformCreateDto createModel)
         {
             _logger.LogInformation("Запрос в метод api/Platforms/getAll");
             try
             {
-                var newId = _platformRepo.CreatePlatform(createModel.CreateFromDto());
-                var platform = _platformRepo.GetPlatformById(newId).CreateFromPlatform();
+                var platform = createModel.CreateFromDto();
+                _platformRepo.CreatePlatform(platform);
                 _platformRepo.SaveChanges();
-                return Ok(platform);
+
+                var returnModel = platform.CreateFromPlatform();
+                await _commandDataClient.SendPlatformToCommand(returnModel);
+
+
+                return Ok(returnModel);
             }
             catch (Exception ex)
             {
